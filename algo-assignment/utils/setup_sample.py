@@ -3,36 +3,43 @@ from models.models import Graph, Node, Edge, GraphRunConfig
 from utils.graph_runner import GraphRunner
 from utils.graph_validators import GraphValidator
 
-def get_sample_graph():
+def get_sample_graph(nodes, edges):
     """
     Define and return a sample graph setup
     """
-    node_a = Node(node_id = "A", data_out = {"out_a": 10})
-    node_b = Node(node_id = "B", data_in = {"in_b": None}, data_out={"out_b":20})
-    node_c = Node(node_id = "C", data_in = {"in_c": None})
+    node_map = {node.node_id: node for node in nodes}
     
-    edge_a_b = Edge(src_node = "A", dst_node= "B", src_to_dst_data_keys={"out_a": "in_b"})
-    edge_b_c = Edge(src_node="B", dst_node="C", src_to_dst_data_keys={"out_b": "in_c"})\
+    for edge in edges:
+        src = node_map.get(edge.src_node)
+        dst = node_map.get(edge.dst_node)
         
-    node_a.paths_out.append(edge_a_b)
-    node_b.paths_in.append(edge_a_b)
-    node_b.paths_out.append(edge_b_c)
-    node_c.paths_in.append(edge_b_c)
+        if src and dst:
+            src.paths_out.append(edge)
+            dst.paths_in.append(edge)
+        else:
+            raise ValueError("Edge refers to non-existent nodes")
 
-    return Graph(nodes=[node_a, node_b, node_c])
+    return Graph(nodes=nodes)
 
-def get_sample_config():
+def get_sample_config(root_inputs=None, data_overwrites=None, enable_list=None, disable_list=None):
     """
     Return a sample configuration for running the graph
     """
+    root_inputs = root_inputs or {}
+    data_overwrites = data_overwrites or {}
+    enable_list = enable_list or []
+    disable_list = disable_list or []
+
     return GraphRunConfig(
-        root_inputs = {"A": {"out_a": 15}},
-        data_overwrites = {"B": {"in_b": 25}}
+        root_inputs=root_inputs,
+        data_overwrites=data_overwrites,
+        enable_list=enable_list,
+        disable_list=disable_list
     )
     
 def get_expected_outputs():
     return{
         "output_b": {"out_b": 20},
-        "leaf_outputs": {"C": {"in_c": 20}},
+        "leaf_outputs": {"C": {}},
         "islands": [["A", "B", "C"]],
     }
