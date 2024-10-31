@@ -9,6 +9,19 @@ from models.models import Graph, Node, Edge, GraphRunConfig
     "graph, config, expected_outputs",
     [
         (
+            # single node with no edges
+            setup_sample.get_sample_graph(
+                nodes=[Node(node_id="A", data_out={"out_a": 10})], edges=[]  # Nodes
+            ),  # Edges
+            setup_sample.get_sample_config(root_inputs={"A": {"out_a": 20}}),  # Config
+            {
+                "output_b": None,
+                "leaf_outputs": {"A": {"out_a": 10}},
+                "islands": [["A"]],
+            },
+        ),
+        (
+            # 3 nodes with simple linear dependency
             setup_sample.get_sample_graph(
                 nodes=[
                     Node(node_id="A", data_out={"out_a": 10}),
@@ -37,6 +50,91 @@ from models.models import Graph, Node, Edge, GraphRunConfig
                 "output_b": {"out_b": 20},
                 "leaf_outputs": {"C": {}},
                 "islands": [["A", "B", "C"]],
+            },
+        ),
+        (
+            # Graph with Dependency Edge Only (No Data Transfer)
+            setup_sample.get_sample_graph(
+                nodes=[
+                    Node(node_id="A", data_out={"out_a": 10}),
+                    Node(node_id="B", data_in={"in_b": None}),
+                ],
+                edges=[
+                    Edge(
+                        src_node="A", dst_node="B", src_to_dst_data_keys={}
+                    ),  # Dependency without data transfer
+                ],
+            ),
+            setup_sample.get_sample_config(root_inputs={"A": {"out_a": 10}}),
+            {
+                "output_b": {},
+                "leaf_outputs": {"B": {}},
+                "islands": [["A", "B"]],
+            },
+        ),
+        (
+            setup_sample.get_sample_graph(
+                nodes=[
+                    Node(node_id="A", data_out={"out_a": 10}),
+                    Node(node_id="B", data_in={"in_b": None}, data_out={"out_b": 20}),
+                    Node(node_id="C", data_in={"in_c": None}),
+                ],
+                edges=[
+                    Edge(
+                        src_node="A",
+                        dst_node="B",
+                        src_to_dst_data_keys={"out_a": "in_b"},
+                    ),
+                    Edge(
+                        src_node="B",
+                        dst_node="C",
+                        src_to_dst_data_keys={"out_b": "in_c"},
+                    ),
+                ],
+            ),
+            setup_sample.get_sample_config(
+                root_inputs={"A": {"out_a": 15}}, data_overwrites={"B": {"out_b": 25}}
+            ),
+            {
+                "output_b": {"out_b": 20},
+                "leaf_outputs": {"C": {}},
+                "islands": [["A", "B", "C"]],
+            },
+        ),
+        # This TC should fail, since, C is disabled and it is being used in edge/node 
+        (
+            setup_sample.get_sample_graph(
+                nodes=[
+                    Node(node_id="A", data_out={"out_a": 10}),
+                    Node(node_id="B", data_in={"in_b": None}, data_out={"out_b": 20}),
+                    Node(node_id="C", data_in={"in_c": None}),
+                    Node(node_id="D", data_in={"in_d": None}),
+                ],
+                edges=[
+                    Edge(
+                        src_node="A",
+                        dst_node="B",
+                        src_to_dst_data_keys={"out_a": "in_b"},
+                    ),
+                    Edge(
+                        src_node="B",
+                        dst_node="C",
+                        src_to_dst_data_keys={"out_b": "in_c"},
+                    ),
+                    Edge(
+                        src_node="C",
+                        dst_node="D",
+                        src_to_dst_data_keys={"out_c": "in_d"},
+                    ),
+                ],
+            ),
+            setup_sample.get_sample_config(
+                root_inputs={"A": {"out_a": 15}}, disable_list=["C"]
+            ),
+            {
+                "output_b": {"in_b": 15},
+                "leaf_outputs": {"B": {"out_b": 20}},
+                "islands": True,
             },
         ),
     ],
