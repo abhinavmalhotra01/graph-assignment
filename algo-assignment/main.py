@@ -2,7 +2,7 @@ import uuid
 from models.models import Graph, Node, Edge, GraphRunConfig
 from utils.graph_runner import GraphRunner
 from utils.graph_validators import GraphValidator
-from utils.setup_sample import get_expected_outputs, get_sample_config, get_sample_graph
+from utils.setup_sample import get_sample_config, get_sample_graph
 
 
 def validate_graph(graph, config):

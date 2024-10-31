@@ -37,9 +37,3 @@ def get_sample_config(root_inputs=None, data_overwrites=None, enable_list=None, 
         disable_list=disable_list
     )
     
-def get_expected_outputs():
-    return{
-        "output_b": {"out_b": 20},
-        "leaf_outputs": {"C": {}},
-        "islands": [["A", "B", "C"]],
-    }
