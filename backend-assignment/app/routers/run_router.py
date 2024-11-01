@@ -7,6 +7,9 @@ router = APIRouter()
 
 @router.post("/run")
 async def execute_graph_run(config: RunConfig, graph_id: str):
+    """
+    run graph based on config provided in body and graph_id to get graph from db
+    """
     graph = await get_graph(graph_id)
     if not graph:
         raise HTTPException(status_code=404, detail="Graph not found")
@@ -20,6 +23,9 @@ async def execute_graph_run(config: RunConfig, graph_id: str):
 
 @router.get("/runs/{run_id}")
 async def get_run(run_id: str):
+    """
+    get run entity based on run_id
+    """
     run_output = await get_run_output(run_id)
     if not run_output:
         raise HTTPException(status_code=404, detail="Run output not found")

@@ -6,10 +6,10 @@ from app.routers import run_router
 
 app = FastAPI()
 
-
 @app.get("/test")
 def test_app():
     return "App is up"
 
+# include graph and run routers
 app.include_router(graph_router.router)
 app.include_router(run_router.router)

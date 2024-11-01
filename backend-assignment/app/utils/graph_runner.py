@@ -2,6 +2,9 @@ from collections import deque, defaultdict
 
 # This is the same function from algo-assignment
 def toposort(graph):
+    """
+    get topological sorting of graph using BFS
+    """
     execution_order = []
     level_map = defaultdict(list)
     node_map = {node.id: node for node in graph.nodes}
@@ -40,6 +43,10 @@ def toposort(graph):
 
 # This is same function as algo assignment
 def overwrite_traversals(graph, config, execution_order, level_map, node_map):
+    """
+    Generate run entity for graph and also overwrite existing level_wise, node_map based on overwrites in config
+    """
+    
     run_data = {}
     
     for id, inputs in config.root_inputs.items():

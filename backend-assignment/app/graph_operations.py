@@ -4,6 +4,10 @@ from .utils.graph_runner import toposort, overwrite_traversals
 
 
 async def run_graph(graph: Graph, config: RunConfig):
+    """
+    This is the function to traverse through the graph and return node_map
+    The traversal methods are similar to algo assignment
+    """
     # Validate graph and configuration
     validate_graph_structure(graph)
     
