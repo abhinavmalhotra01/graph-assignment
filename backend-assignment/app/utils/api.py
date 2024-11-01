@@ -1,8 +1,8 @@
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
-from .models import Graph, RunOutput
-from .serializers import serialize_graph, deserialize_graph, serialize_run_output, deserialize_run_output
-from app.database import db
+from app.models import Graph, RunOutput
+from app.utils.serializers import serialize_graph, deserialize_graph, serialize_run_output, deserialize_run_output
+from app.utils.database import db
 
 
 async def create_graph(graph: Graph):
@@ -35,8 +35,6 @@ async def delete_graph(graph_id: str) -> bool:
     """
     result = await db["graphs"].delete_one({"id": graph_id})
     return result.deleted_count > 0
-
-# Similarly implement update, delete, and query operations
 
 
 async def save_run_output(run_output: RunOutput):

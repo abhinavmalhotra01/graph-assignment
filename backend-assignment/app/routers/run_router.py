@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.models import RunConfig, RunOutput
-from app.graph_operations import run_graph
-from app.api import get_graph, get_run_output, save_run_output
+from app.utils.graph_operations import run_graph
+from app.utils.api import get_graph, get_run_output, save_run_output
 
 router = APIRouter()
 

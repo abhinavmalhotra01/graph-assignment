@@ -1,7 +1,7 @@
 import asyncio
 from app.models import Graph, Node, Edge
-from app.api import create_graph
-from app.database import db  # Import the db instance to initiate a connection
+from app.utils.api import create_graph
+from app.utils.database import db  # Import the db instance to initiate a connection
 
 async def setup_sample_data():
     """
