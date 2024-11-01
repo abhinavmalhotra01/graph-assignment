@@ -11,7 +11,7 @@ from models.models import Graph, Node, Edge, GraphRunConfig
         (
             # single node with no edges
             setup_sample.get_sample_graph(
-                nodes=[Node(node_id="A", data_out={"out_a": 10})], edges=[]  # Nodes
+                nodes=[Node(id="A", data_out={"out_a": 10})], edges=[]  # Nodes
             ),  # Edges
             setup_sample.get_sample_config(root_inputs={"A": {"out_a": 20}}),  # Config
             {
@@ -24,9 +24,9 @@ from models.models import Graph, Node, Edge, GraphRunConfig
             # 3 nodes with simple linear dependency
             setup_sample.get_sample_graph(
                 nodes=[
-                    Node(node_id="A", data_out={"out_a": 10}),
-                    Node(node_id="B", data_in={"in_b": None}, data_out={"out_b": 20}),
-                    Node(node_id="C", data_in={"in_c": None}),
+                    Node(id="A", data_out={"out_a": 10}),
+                    Node(id="B", data_in={"in_b": None}, data_out={"out_b": 20}),
+                    Node(id="C", data_in={"in_c": None}),
                 ],
                 edges=[
                     Edge(
@@ -56,8 +56,8 @@ from models.models import Graph, Node, Edge, GraphRunConfig
             # Graph with Dependency Edge Only (No Data Transfer)
             setup_sample.get_sample_graph(
                 nodes=[
-                    Node(node_id="A", data_out={"out_a": 10}),
-                    Node(node_id="B", data_in={"in_b": None}),
+                    Node(id="A", data_out={"out_a": 10}),
+                    Node(id="B", data_in={"in_b": None}),
                 ],
                 edges=[
                     Edge(
@@ -75,9 +75,9 @@ from models.models import Graph, Node, Edge, GraphRunConfig
         (
             setup_sample.get_sample_graph(
                 nodes=[
-                    Node(node_id="A", data_out={"out_a": 10}),
-                    Node(node_id="B", data_in={"in_b": None}, data_out={"out_b": 20}),
-                    Node(node_id="C", data_in={"in_c": None}),
+                    Node(id="A", data_out={"out_a": 10}),
+                    Node(id="B", data_in={"in_b": None}, data_out={"out_b": 20}),
+                    Node(id="C", data_in={"in_c": None}),
                 ],
                 edges=[
                     Edge(
@@ -105,10 +105,10 @@ from models.models import Graph, Node, Edge, GraphRunConfig
         (
             setup_sample.get_sample_graph(
                 nodes=[
-                    Node(node_id="A", data_out={"out_a": 10}),
-                    Node(node_id="B", data_in={"in_b": None}, data_out={"out_b": 20}),
-                    Node(node_id="C", data_in={"in_c": None}),
-                    Node(node_id="D", data_in={"in_d": None}),
+                    Node(id="A", data_out={"out_a": 10}),
+                    Node(id="B", data_in={"in_b": None}, data_out={"out_b": 20}),
+                    Node(id="C", data_in={"in_c": None}),
+                    Node(id="D", data_in={"in_d": None}),
                 ],
                 edges=[
                     Edge(

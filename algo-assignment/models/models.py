@@ -10,7 +10,7 @@ class Edge(BaseModel):
     src_to_dst_data_keys: Dict[str, str] 
 
 class Node(BaseModel):
-    node_id: str
+    id: str
     data_in: Dict[str, DataType] = {}
     data_out: Dict[str, DataType] = {}
     paths_in: List[Edge] = []

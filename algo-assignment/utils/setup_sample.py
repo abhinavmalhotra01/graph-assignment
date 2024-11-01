@@ -7,7 +7,7 @@ def get_sample_graph(nodes, edges):
     """
     Define and return a sample graph setup
     """
-    node_map = {node.node_id: node for node in nodes}
+    node_map = {node.id: node for node in nodes}
     
     for edge in edges:
         src = node_map.get(edge.src_node)

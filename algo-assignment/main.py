@@ -28,7 +28,7 @@ def run_graph_operations(graph, config):
     toposort_order = runner.execution_order
     level_map = runner.level_map
 
-    output_B = runner.get_node_output(run_id=run_id, node_id="B")
+    output_B = runner.get_node_output(run_id=run_id, id="B")
     leaf_outputs = runner.get_leaf_outputs(run_id=run_id)
     islands = runner.check_islands()
 
@@ -49,9 +49,9 @@ def main():
     try:
         graph = get_sample_graph(
             nodes=[
-                Node(node_id="A", data_out={"out_a": 10}),
-                Node(node_id="B", data_in={"in_b": None}, data_out={"out_b": 20}),
-                Node(node_id="C", data_in={"in_c": None}),
+                Node(id="A", data_out={"out_a": 10}),
+                Node(id="B", data_in={"in_b": None}, data_out={"out_b": 20}),
+                Node(id="C", data_in={"in_c": None}),
             ],
             edges=[
                 Edge(
