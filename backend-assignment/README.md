@@ -29,8 +29,8 @@ FastAPI, MongoDB
 Design is based on my limited knowledge, I havent used any design pattern to implement classes. <br/>
 The app is divided based on graph_operations as instructed and FastAPI was the choice of techstack due to easy setup and simple file structure. <br/>
 <li> MongoDB contains schema of each entity, there is no foreign key or referential constraint among them. </li>
-<li> Graph APIs are used to perform CRUD for any entry, entries are differentiated based on graph_id. For creating graph entity, request body must contain the complete node, edges array and nested dictionaries, in a string format. </li>
-<li> The above string is serialized to JSON and then inserted into DB. Any existing entry in DB can be fetched using graph_id, which will then be deserialized to send to frontend. Similarly for update and delete operations, graph_id is required to fetch entry and perform subsequent operation. </li>
+<li> Graph APIs are used to perform CRUD for any entry, entries are differentiated based on graph_id. For creating graph entity, request body must contain the complete node, edges array and nested dictionaries, in a Graph class type. </li>
+<li> The above Graph type object is serialized to JSON and then inserted into DB. Any existing entry in DB can be fetched using graph_id, which will then be deserialized to send to frontend. Similarly for update and delete operations, graph_id is required to fetch entry and perform subsequent operation. </li>
 <li> For running the graph, graph_id and config is required, the corresponding graph must exist in DB beforehand, which will then be executed i.e. topological sort and level wise traversal. The run entity i.e. node_map (this is my assumption to store node_map as run) alongside run_id to differentiate between different runs. </li>
 <li> Data overwriting based on config is also taken care of. output for any node can be retrieved from run_data based on node_id. Similar to graph, serialization and deserialization is used while fetching and storing to DB. </li>
 
