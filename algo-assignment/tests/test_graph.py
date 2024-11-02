@@ -5,6 +5,7 @@ from main import run_graph_operations
 from models.models import Graph, Node, Edge, GraphRunConfig
 
 
+# Test graph operations with various configurations and expected outputs
 @pytest.mark.parametrize(
     "graph, config, expected_outputs",
     [
@@ -101,7 +102,7 @@ from models.models import Graph, Node, Edge, GraphRunConfig
                 "islands": [["A", "B", "C"]],
             },
         ),
-        # This TC should fail, since, C is disabled and it is being used in edge/node 
+        # This TC should fail, since, C is disabled and it is being used in edge/node
         (
             setup_sample.get_sample_graph(
                 nodes=[
@@ -140,6 +141,12 @@ from models.models import Graph, Node, Edge, GraphRunConfig
     ],
 )
 def test_graph_run_operations(graph, config, expected_outputs):
+    """
+    Run a series of tests on graph operations:
+    - Verifies run ID format
+    - Checks node output consistency
+    - Validates leaf nodes and islands in graph
+    """
 
     # Call the main function to get results
     results = run_graph_operations(graph, config)

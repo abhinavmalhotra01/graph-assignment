@@ -6,9 +6,20 @@ from utils.graph_validators import GraphValidator
 def get_sample_graph(nodes, edges):
     """
     Define and return a sample graph setup
+    The main idea behind this is to create a graph object based on input nodes and edges
+    
+    Args:
+        nodes: List of nodes
+        edges: List of edges
+        
+    Returns:
+        A graph object with expected relations
     """
+    
+    # create a node_map with id as key
     node_map = {node.id: node for node in nodes}
     
+    # add edges in paths for each node
     for edge in edges:
         src = node_map.get(edge.src_node)
         dst = node_map.get(edge.dst_node)
